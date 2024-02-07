@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital@0;1&family=Lora&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+    html {
+      font-family: "Lora";
+    }
+  }
+ 
+  
+header,nav {
+  z-index: 1001 !important;
+}
+
+.section-container {
+  @apply max-w-screen-2xl container mx-auto xl:px-24 px-4
+}
+
+.subtitle {
+  @apply text-red uppercase tracking-wide font-semibold text-lg
+}
+
+.title{
+  @apply text-4xl md:text-5xl md:leading-snug font-bold 
+}
