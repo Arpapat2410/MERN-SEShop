@@ -10,7 +10,7 @@ const Banner = () => {
         <div className="flex flex-col md:flex-row items-center justify-around -mt-16 gap-4">
           <div className="bg-white px-3 py-2 rounded-2xl flex items-center gap-3 shadow-sm w-64">
             <img
-              src="/home/gamepad.png"
+              src="/images/home/gamepad.png"
               alt=""
               className="rounded-2xl w-20"
             />
@@ -48,7 +48,7 @@ const Banner = () => {
           </div>
           <div className="bg-white px-3 py-2 rounded-2xl flex items-center gap-3 shadow-sm w-64">
             <img
-              src="/home/headphone.png"
+              src="/images/home/gamingkeyboard.png"
               alt=""
               className="rounded-2xl w-20"
             />

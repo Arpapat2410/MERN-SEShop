@@ -1,0 +1,123 @@
+[
+    {
+      "_id": "1",
+      "name": "Binary Code T-shirt",
+      "price": "25.99",
+      "image": "https://source.unsplash.com/random/200x200/?binary",
+      "description": "Show your love for coding with this stylish binary code t-shirt!",
+      "category": "popular"
+    },
+    {
+      "_id": "2",
+      "name": "Code Mug",
+      "price": "12.50",
+      "image": "https://source.unsplash.com/random/200x200/?mug",
+      "description": "Start your day with a cup of coffee in this coder-themed mug!",
+      "category": "popular"
+    },
+    {
+      "_id": "3",
+      "name": "Keyboard Keycap Set",
+      "price": "35.99",
+      "image": "https://source.unsplash.com/random/200x200/?keyboard",
+      "description": "Customize your keyboard with this set of keycaps featuring coding symbols.",
+      "category": "popular"
+    },
+    {
+      "_id": "4",
+      "name": "Debugging Toolkit",
+      "price": "49.99",
+      "image": "https://source.unsplash.com/random/200x200/?toolkit",
+      "description": "Equip yourself with essential tools for debugging your code effectively.",
+      "category": "popular"
+    },
+    {
+      "_id": "5",
+      "name": "Programmer Socks",
+      "price": "9.99",
+      "image": "https://source.unsplash.com/random/200x200/?socks",
+      "description": "Keep your feet warm and stylish with these programmer-themed socks!",
+      "category": "Clothing"
+    },
+    {
+      "_id": "6",
+      "name": "Code Stickers Pack",
+      "price": "7.99",
+      "image": "https://source.unsplash.com/random/200x200/?stickers",
+      "description": "Decorate your laptop or notebook with these cool stickers featuring code snippets.",
+      "category": "Accessories"
+    },
+    {
+      "_id": "7",
+      "name": "Software Engineering Book",
+      "price": "29.99",
+      "image": "https://source.unsplash.com/random/200x200/?book",
+      "description": "Enhance your coding skills with this comprehensive software engineering book.",
+      "category": "Accessories"
+    },
+    {
+      "_id": "8",
+      "name": "Code Bracelet",
+      "price": "15.99",
+      "image": "https://source.unsplash.com/random/200x200/?bracelet",
+      "description": "Wear your passion for coding with this stylish bracelet featuring code snippets.",
+      "category": "Accessories"
+    },
+    {
+      "_id": "9",
+      "name": "Programmer Hoodie",
+      "price": "45.99",
+      "image": "https://source.unsplash.com/random/200x200/?hoodie",
+      "description": "Stay cozy and stylish in this programmer-themed hoodie!",
+      "category": "Clothing"
+    },
+    {
+      "_id": "10",
+      "name": "Code Art Print",
+      "price": "19.99",
+      "image": "https://source.unsplash.com/random/200x200/?art",
+      "description": "Decorate your workspace with this beautiful art print featuring code snippets.",
+      "category": "Accessories"
+    },
+    {
+      "_id": "11",
+      "name": "Programmable LED Strip",
+      "price": "39.99",
+      "image": "https://source.unsplash.com/random/200x200/?led",
+      "description": "Customize your desk lighting with this programmable LED strip.",
+      "category": "Gadgets"
+    },
+    {
+      "_id": "12",
+      "name": "Code Keychain",
+      "price": "8.99",
+      "image": "https://source.unsplash.com/random/200x200/?keychain",
+      "description": "Carry your keys in style with this sleek keychain featuring coding symbols.",
+      "category": "Accessories"
+    },
+    {
+      "_id": "13",
+      "name": "Debugging Mousepad",
+      "price": "11.99",
+      "image": "https://source.unsplash.com/random/200x200/?mousepad",
+      "description": "Optimize your workflow with this debugging-themed mousepad!",
+      "category": "Accessories"
+    },
+    {
+      "_id": "14",
+      "name": "Coding Puzzle",
+      "price": "16.99",
+      "image": "https://source.unsplash.com/random/200x200/?puzzle",
+      "description": "Challenge your coding skills with this fun and educational coding puzzle!",
+      "category": "Accessories"
+    },
+    {
+      "_id": "15",
+      "name": "Code Pen Set",
+      "price": "22.99",
+      "image": "https://source.unsplash.com/random/200x200/?pen",
+      "description": "Write in style with this set of pens featuring programming-themed designs.",
+      "category": "Accessories"
+    }
+  ]
+  
