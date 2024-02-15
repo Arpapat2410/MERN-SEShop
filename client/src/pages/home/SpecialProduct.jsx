@@ -121,7 +121,7 @@ const SpecialProduct = () => {
       <div className="slider-container">
         <Slider
           ref={slider}
-          {...settings}
+          {...settings} 
           className="mt-10 space-x-5 overflow-hidden">
           {product.map((item, index) => {
             return (

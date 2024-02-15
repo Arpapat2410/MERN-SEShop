@@ -24,3 +24,9 @@ header,nav {
 .title{
   @apply text-4xl md:text-5xl md:leading-snug font-bold 
 }
+
+.active {
+  text-decoration:  underline;
+  text-underline-offset:5px;
+  @apply text-red
+}
