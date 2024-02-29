@@ -1,9 +1,12 @@
 import React from 'react'
 import { createBrowserRouter, } from "react-router-dom";
 import Main from '../layout/Main';
-import Home from '../pages/home/home';
+import Home from '../pages/home/Home';
 import ProductList from '../pages/shop/ProductList';
 import SignUp from '../components/SignUp';
+import SignIn from '../components/SignIn';
+import UpdateProfile from '../pages/dashboard/UpdateProfile';
+import PrivateRouter from '../PrivateRouter/PrivateRouter';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +19,11 @@ const router = createBrowserRouter([
       },
       {
         path : "/shop",
-        element : <ProductList/>
+        element : (<PrivateRouter><ProductList/></PrivateRouter>)
+      },
+      {
+        path : "/update-profile",
+        element : <UpdateProfile/>
       }
     ]
   },
@@ -26,7 +33,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/SignIn",
-    element: <SignUp />,
+    element: <SignIn />,
   }
 ]);
 

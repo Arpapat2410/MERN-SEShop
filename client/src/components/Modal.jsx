@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useLocation , useNavigate } from 'react-router-dom'
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -8,17 +8,25 @@ import { AuthContext } from '../context/AuthProvider';
 
 const Modal = ({ name }) => {   
     const { login, signUpWithPopup } = useContext(AuthContext)
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location?.state?.from?.pathname || "/";
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm()
+
     const onSubmit = (data) => {
         login(data.email, data.password)
             .then((reslt) => {
                 const user = reslt.user;
-                console.log(user);
+                //console.log(user);
                 alert("Login Successful")
+                document.getElementById(name).close()
+                navigate(from, {replace : true })
+                
             })
             .catch((error) => {
                 console.log(error);
@@ -41,7 +49,7 @@ const Modal = ({ name }) => {
         <dialog id={name} className="modal modal-bottom sm:modal-middle">
             <div className="modal-box flex flex-col justify-center">
                 <form className="card-body w-full" onSubmit={handleSubmit(onSubmit)}>
-                    <h3 className="font-bold text-lg text-center">Pleas Login!</h3>
+                    <h3 className="font-bold text-lg text-center">PLEAS LOGIN!</h3>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text ">Email</span>
@@ -78,7 +86,7 @@ const Modal = ({ name }) => {
                     </button>
                 </form>
                 <div className='text-center space-x-3 mb-3'>
-                    <button className='btn btn-ghost btn-circle hover:bg-red hover:text-white'>
+                    <button className='btn btn-ghost btn-circle hover:bg-red hover:text-white' onClick={googleSignUp}>
                         <FaGoogle />
                     </button>
                     <button className='btn btn-ghost btn-circle hover:bg-red hover:text-white'>
