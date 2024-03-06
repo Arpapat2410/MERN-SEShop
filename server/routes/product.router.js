@@ -111,36 +111,47 @@ router.get('/:id', async(req, res) => {
     }
 });
 
-module.exports = router;
+
 
 
 /**
  * @swagger
- * /products:
+ * /carts:
  *  post:
- *      summary: Create a new product.
- *      tags: [Products]
+ *      summary: Add a new item to the cart or update existing item.
+ *      tags: [Carts]
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/Product'
+ *                      $ref: '#/components/schemas/Cart'
  *      responses:
  *          201:
- *              description: Product created successfully.
+ *              description: Item successfully added to the cart or updated.
  *          500:
- *              description: Some error occurred.
+ *              description: Internal Server Error.
  */
-router.post('/', async (req, res) => {
-     const newProduct = new ProductModel(req.body);
+router.post("/", async (req, res) => {
     try {
-        const product = await newProduct.save()
-        res.status(201).json(product)
+        const { productId, email } = req.body;
+        let existingCart = await CartModel.findOne({ productId, email });
+
+        if (existingCart) {
+            // อัพเดทรายการในตะกร้าสินค้าหากมีรายการอยู่แล้ว
+            existingCart.quantity += req.body.quantity;
+            await existingCart.save();
+            res.status(201).json(existingCart);
+        } else {
+            // เพิ่มรายการใหม่ลงในตะกร้าสินค้าหากไม่มีรายการอยู่
+            const newCart = await CartModel.create(req.body);
+            res.status(201).json(newCart);
+        }
     } catch (error) {
-        res.status(500).json({ error: "Failed to create product" });
+        res.status(500).json({ error: "Failed to Add Item to Cart" });
     }
 });
+
 
 /**
  * @swagger
@@ -203,6 +214,8 @@ router.put('/:id', async (req, res) => {
  *          500:
  *              description: Some error occurred.
  */
+
+
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -215,3 +228,5 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: "Failed to delete product" });
     }
 });
+
+module.exports = router;

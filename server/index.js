@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const productRouter = require("./routes/product.router"); 
+const cartRouter = require("./routes/cart.router")
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -65,6 +66,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/products", productRouter);
+app.use("/carts", cartRouter);
 
 // Serve Swagger UI at /api-doc
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
