@@ -7,12 +7,8 @@ const Profile = ({ user }) => {
     const navigate = useNavigate()
 
     const handleLogout = () => {
-        logout().then(()=>{
-            alert("Logget Out!")
-            navigate("/")
-        }).catch((error)=> {
-            console.log(error);
-        })
+        logout()
+        navigate('/')
     }
     return (
         <div>

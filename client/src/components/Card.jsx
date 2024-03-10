@@ -1,12 +1,71 @@
-import React, { useState } from 'react'
-import { Link } from "react-router-dom"
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import Swal from 'sweetalert2';
+import { AuthContext } from '../context/AuthProvider';
+import axios from 'axios';
 
 const Card = ({ item }) => {
     const { _id, name, image, price, description } = item;
     const [isHeartFilled, setIsHeartFilled] = useState(false);
+    const { user } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const handleHeartClick = () => {
-        setIsHeartFilled(true)
-    }
+        setIsHeartFilled(!isHeartFilled);
+    };
+
+    const handleAddtoCart = (item) => {
+        const cartItem = {
+            productId: item._id,
+            email: user.email,
+            name: item.name,
+            price: item.price,
+            image: item.image,
+            quantity: 1
+        };
+        console.log(cartItem);
+
+        if (user && user.email) {
+            axios.post("http://localhost:4000/carts", cartItem)
+                .then(() => {
+                    console.log("Item successfully added to the cart or updated.");
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Product added to the cart",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                })
+                .catch(() => {
+                    console.error("Internal Server Error.");
+                    Swal.fire({
+                        icon: "error",
+                        title: "Internal Server Error",
+                        text: "Something went wrong while adding the item to the cart.",
+                        position: "center",
+                        showConfirmButton: true
+                    });
+                });
+        } else {
+            Swal.fire({
+                icon: "warning",
+                title: "Please login to add an item to your cart",
+                position: "center",
+                showConfirmButton: false,
+                timer: 1500,
+                confirmButtonText: "Login now",
+                confirmButtonColor: "#3085b6",
+                cancelButtonColor: "#d33"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate("/login", { state: { from: location } });
+                }
+            });
+        }
+    };
+
     return (
         <div className="card shadow-md relative mr-5 md:my-5 hover:scale-105 transition-all duration-300">
             <div
@@ -26,17 +85,17 @@ const Card = ({ item }) => {
                     />
                 </svg>
             </div>
-            <Link>
+            <Link to={`/product/${_id}`}>
                 <figure>
                     <img
                         src={image}
                         alt={name}
-                        className=" md:h-72 h-[250px] w-auto"
+                        className="md:h-72 h-[250px] w-auto"
                     />
                 </figure>
             </Link>
             <div className="card-body ">
-                <Link>
+                <Link to={`/product/${_id}`}>
                     <h2 className="card-title">{name}</h2>
                 </Link>
                 <div className="overflow-hidden max-h-[48px] md:max-h-[70px] md:relative md:mb-[10px]">
@@ -44,11 +103,11 @@ const Card = ({ item }) => {
                 </div>
                 <div className="card-actions justify-between items-center mt-2">
                     <h5 className="font-semibold">{price}</h5>
-                    <button className="btn bg-red text-white">Add to cart</button>
+                    <button className="btn bg-red text-white" onClick={() => { handleAddtoCart(item) }}>Add to cart</button>
                 </div>
             </div>
         </div>
     );
 };
 
-export default Card
+export default Card;
