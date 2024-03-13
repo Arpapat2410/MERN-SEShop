@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { AuthContext } from '../context/AuthProvider'; 
+import { AuthContext } from '../../context/AuthProvider'; 
+import useCart from '../../hook/useCart';
 
 const AddtoCart = () => {
     const { user } = useContext(AuthContext); // เรียกใช้ข้อมูลผู้ใช้จาก Context API
     const [cartItems, setCartItems] = useState([]);
+    const [ cart , refetch ] = useCart()
 
     useEffect(() => {
         axios.get("http://localhost:4000/carts")
@@ -22,7 +24,7 @@ const AddtoCart = () => {
             const updatedItem = { ...cartItems[index], quantity: cartItems[index].quantity - 1 };
             const response = await axios.put(`http://localhost:4000/carts/${updatedItem._id}`, updatedItem);
             setCartItems(prevState => {
-                const newCartItems = [...prevState];
+                const newCartItems = [...prevState];    
                 newCartItems[index] = response.data;
                 return newCartItems;
             });
@@ -65,6 +67,7 @@ const AddtoCart = () => {
                         newCartItems.splice(index, 1);
                         return newCartItems;
                     });
+                    refetch()
                     await Swal.fire(
                         'Deleted!',
                         'Your file has been deleted.',
@@ -74,6 +77,40 @@ const AddtoCart = () => {
             }
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const handleClearCart = async () => {
+        try {
+            const result = await Swal.fire({
+                title: 'Are you sure?',
+                text: "This will remove all items from your cart!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, clear it!'
+            });
+
+            if (result.isConfirmed) {
+                const response = await axios.delete(`http://localhost:4000/carts/clear/${user.email}`);
+                if (response.status === 200) {
+                    setCartItems([]); // Clear the cart items in the state
+                    refetch()
+                    await Swal.fire(
+                        'Cleared!',
+                        'All items have been removed from your cart.',
+                        'success'
+                    );
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to clear cart items. Please try again later.',
+            });
         }
     };
     
@@ -88,8 +125,8 @@ const AddtoCart = () => {
                 </div>
             </div>
 
-            <div className="overflow-x-auto">
-                <table className="table">
+            <div className="overflow-x-auto items-center">
+                <table className="table text-center">
                     <thead>
                         <tr className="bg-red text-white text-center">
                             <th className='text-white'></th>
@@ -113,11 +150,11 @@ const AddtoCart = () => {
                                     </div>
                                 </td>
                                 <td>{item.name}</td>
-                                <td>
+                                <td className='justify-center flex items-center'>
                                     <div className='flex items-center border-gray-100'>
                                         <span 
                                             className='btn cursor-pointer bg-base-300 rounded-1 py-1 px-5 duration-100 hover:bg-red hover:text-white'
-                                            onClick={() => handleDecreaseQuantity(index)}
+                                            onClick={() => handleDecreaseQuantity(index)} disabled={item.quantity === 0}
                                         >
                                             {" "}
                                             -{" "}
@@ -152,14 +189,26 @@ const AddtoCart = () => {
                 </table>
             </div>
 
-            <div className='section-container mt-16'>
-                <div className='flex flex-col md:flex-row items-center justify-between gap-12'>
+            <div className="py-10 flex flex-col justify-end items-end">
+                <div className='space-y-7 px-4 text-center'>
+                    <button className="btn bg-red text-white rounded-lg" onClick={handleClearCart}>
+                        Clear all Carts
+                    </button>
+                </div>
+        </div>
+
+            <div className='section-container mt-10'>
+                <div className='flex flex-col md:flex-row  justify-between gap-12'>
                     <div className='md:w-1/2'>
                         <div className='text-left md:w-4/5 space-y-2'>
                             <p className='text-lg text-red uppercase font-semibold'>Customer Details</p>
-                            <p>Name : {user && user.name}</p> 
-                            <p>Email : {user && user.email}</p>
-                            <p>User_id : </p>
+                            {user && (
+                                <>
+                                    <p>Name : {user.displayName}</p> 
+                                    <p>Email : {user.email}</p>
+                                    <p>User_id : {user.uid}</p>
+                                </>
+                            )}
                         </div>
                     </div>
                     <div className='md:w-1/2'>

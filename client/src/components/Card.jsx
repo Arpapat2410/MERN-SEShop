@@ -3,10 +3,12 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Swal from 'sweetalert2';
 import { AuthContext } from '../context/AuthProvider';
 import axios from 'axios';
+import useCart from '../hook/useCart';
 
 const Card = ({ item }) => {
     const { _id, name, image, price, description } = item;
     const [isHeartFilled, setIsHeartFilled] = useState(false);
+    const [ cart , refetch ] = useCart()
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
@@ -28,21 +30,26 @@ const Card = ({ item }) => {
 
         if (user && user.email) {
             axios.post("http://localhost:4000/carts", cartItem)
-                .then(() => {
-                    console.log("Item successfully added to the cart or updated.");
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Product added to the cart",
-                        showConfirmButton: false,
-                        timer: 1500
+                .then((response) => {
+                    if(response){
+                        refetch()
+                        console.log("Item successfully added to the cart or updated.");
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Product added to the cart",
+                            showConfirmButton: false,
+                            timer: 1500
                     });
+                    }
+                    
                 })
-                .catch(() => {
+                .catch(error => {
+                    const errorMessage = error.response.data.message;
                     console.error("Internal Server Error.");
                     Swal.fire({
                         icon: "error",
-                        title: "Internal Server Error",
+                        title: `${errorMessage}`,
                         text: "Something went wrong while adding the item to the cart.",
                         position: "center",
                         showConfirmButton: true

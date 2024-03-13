@@ -7,7 +7,8 @@ import SignUp from '../components/SignUp';
 import SignIn from '../components/SignIn';
 import UpdateProfile from '../pages/dashboard/UpdateProfile';
 import PrivateRouter from '../PrivateRouter/PrivateRouter';
-import AddtoCart from '../components/AddtoCart';
+import AddtoCart from '../pages/shop/AddtoCart';
+import Dashboard from '../layout/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/SignIn",
     element: <SignIn />,
+  },
+  {
+    path: "/Dashboard",
+    element: <Dashboard />,
   },
   
 ]);

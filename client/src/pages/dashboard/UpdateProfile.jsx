@@ -52,7 +52,6 @@ const UpdateProfile = () => {
                             type="text"
                             placeholder="Photo URL"
                             className="input input-bordered"
-                            required
                             {...register("photoURL")} />
                     </div>
                     <button className="btn bg-red text-white w-full mt-6 mb-4" type="submit" >

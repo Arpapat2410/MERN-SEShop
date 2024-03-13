@@ -36,7 +36,7 @@ const Profile = ({ user }) => {
                     <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                         {/* Sidebar content here */}
                         <li><a href = '/update-profile'>Profile</a></li>
-                        <li><a>Orders</a></li>
+                        <li><a href='/AddtoCart'>Orders</a></li>
                         <li><a>Setting</a></li>
                         <li><a onClick={handleLogout}>Log out</a></li>
                     </ul>
