@@ -5,9 +5,13 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form"
 import { AuthContext } from '../context/AuthProvider';
+import useAuth from "../hook/useAuth"
+import useAxiosPublic from '../hook/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 const SignIn = () => {
-    const { login, signUpWithPopup } = useContext(AuthContext)
+    const { login, signUpWithPopup } = useAuth()
+    const axiosPublic = useAxiosPublic()
     const location = useLocation();
     const navigate = useNavigate();
     const from = location?.state?.from?.pathname || "/";
@@ -33,15 +37,32 @@ const SignIn = () => {
     }
     const googleSignUp = () => {
         signUpWithPopup()
-            .then((reslt) => {
-                const user = reslt.user;
-                console.log(user);
-                alert("Google SignUp Successfully")
-                document.getElementById("login").close();
+        .then((result) => {
+            const user = result.user;
+            console.log(user);
+                const userInfo = {
+                    name : result.user?.displayName,
+                    email: result.user?.email,
+                    photoURL: result.user?.photoURL,
+                }
+                axiosPublic.post("/users", userInfo).then((response) => {
+                    console.log(response);
+                    console.log(users);
+                    Swal.fire({
+                        title : "Account created Successfuly",
+                        icon : "success",
+                        itmer: 1500,
+                    })
+                })
+            alert("Account create Successful")
+            navigate(from, { replace: true })
+        }).catch((error) => {
+            Swal.fire({
+                title : "Email ro Password inccorrect, Please  try again",
+                icon : "warning",
+                itmer: 1500,
             })
-            .catch((error) => {
-                console.log(error);
-            });
+        })
     }
 
     return (

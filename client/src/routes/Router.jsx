@@ -11,6 +11,7 @@ import AddtoCart from '../pages/shop/AddtoCart';
 import DashboardLayout from '../layout/DashboardLayout';
 import User from '../pages/dashboard/admin/User';
 import Dashboard from '../pages/dashboard/admin/Dashboard';
+import AdminRouter from '../PrivateRouter/AdminRouter';
 
 const router = createBrowserRouter([
   {
@@ -22,12 +23,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path : "/shop",
-        element : (<PrivateRouter><ProductList/></PrivateRouter>)
+        path: "/shop",
+        element: (<PrivateRouter><ProductList /></PrivateRouter>)
       },
       {
-        path : "/update-profile",
-        element : <UpdateProfile/>
+        path: "/update-profile",
+        element: <UpdateProfile />
       },
       {
         path: "/AddtoCart",
@@ -45,16 +46,23 @@ const router = createBrowserRouter([
   },
   {
     path: "/Dashboard",
-    element: <DashboardLayout />,
-    children : [
-      {path:"users",
-      element: <User />},
-    
-      {path:"",
-      element: <Dashboard />},
+    element:
+      <PrivateRouter>
+        <DashboardLayout />
+      </PrivateRouter>,
+    children: [
+      { 
+        path: "users",
+        element: <User />
+      },
+
+      {
+        path: "",
+        element: <Dashboard />
+      },
     ]
   },
-  
+
 ]);
 
 

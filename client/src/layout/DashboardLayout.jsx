@@ -1,64 +1,110 @@
 import React from 'react'
-import logo from "/logo.png"
+import logo from '/logo.png'
 import { Link, Outlet } from 'react-router-dom'
-import { MdDashboard } from "react-icons/md";
-import { IoBagCheckSharp } from "react-icons/io5";
-import { FaUserEdit } from "react-icons/fa";
+import { BiSolidDashboard } from "react-icons/bi";
+import { IoBagCheck } from "react-icons/io5";
 import { IoIosAddCircle } from "react-icons/io";
-import { LuLayoutDashboard } from "react-icons/lu";
-
+import { FaUserCheck } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaLocationArrow } from "react-icons/fa";
+import { BsFillQuestionCircleFill } from "react-icons/bs";
 
 const DashboardLayout = () => {
-    const isAmin = true;
-
+    const isAdmin = true;
     return (
+
         <div>
-            {isAmin ? (
-            <div className="drawer lg:drawer-open">
-                <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex flex-col items-center justify-center">
-                    {/* Page content here */}
-                    <div>
-                    <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden"><MdDashboard/></label>
-                    <button class="btn btn-outline btn-warning">Log Out</button>
-                    <div className='mt-5 md:mt-2 mx-4'>contant<Outlet/></div>
+            {isAdmin ? (
+                <div className="drawer lg:drawer-open">
+                    <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+                    <div className="drawer-content flex flex-col items-center justify-center">
+                        {/* Page content here */}
+                        <div className='flex items-center justify-between mx-4'>
+                            <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
+                                <BiSolidDashboard />
+                            </label>
+                            <button className='btn btn-ghost sm:btn-sm md:btn-md lg:btn-lg sm:hidden flex items-center gap-2'>
+                                Logout
+                            </button>
+                        </div>
+                        <div className='mt-5 md:mt-2 mx-4'>
+                            <Outlet />
+                        </div>
+                    </div>
+                    <div className="drawer-side">
+                        <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
+                        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+                            <li>
+                                <Link to="/" className="flex justify-center items-center">
+                                    <img src={logo} alt="" className='w-32' />
+                                    <div className="badge badge-primary text-white">Admin</div>
+                                </Link>
+                            </li>
+                            <hr />
+                            <li>
+                                <Link>
+                                    <BiSolidDashboard />
+                                    Dashboard
+                                </Link>
+                            </li>
+                            <li>
+                                <Link>
+                                    <IoBagCheck />
+                                    Manage Orders
+                                </Link>
+
+                            </li>
+                            <li>
+                                <Link>
+                                    <IoIosAddCircle />
+                                    Add Product
+                                </Link>
+
+                            </li>
+                            <li>
+                                <Link>
+                                    <BiSolidDashboard />
+                                    Manage Item
+                                </Link>
+                            </li>
+                            <li>
+                                <Link >
+                                    <FaUserCheck />
+                                    All Users
+                                </Link>
+                            </li>
+
+                            <li className='border-t-2'>
+                                <Link>
+                                    <BiSolidDashboard />
+                                    Home
+                                </Link>
+                            </li>
+                            <li>
+                                <Link>
+                                    <FaShoppingCart />
+                                    Product
+                                </Link>
+                            </li>
+                            <li>
+                                <Link>
+                                    <FaLocationArrow />
+                                    Orders Tracking
+                                </Link>
+                            </li>
+                            <li>
+                                <Link>
+                                    <BsFillQuestionCircleFill />
+                                    Customer Support
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div className="drawer-side">
-                    <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content  ">
-                        {/* Sidebar content here */}
-                        <li>
-                            <Link to="/Dashboard" className='flex justify-center mb-3' >
+            ) : (<div className='h-screen flex items-center justify-center'>
+                <Link to="/" className='btn btn-error'>You are not an admin! Back to </Link>
+            </div>)}
 
-                                <img src="./logo.png" alt="" className='w-24 h-24 ' />
-                                <div className="badge badge-primary">primary</div>
-
-
-                            </Link>
-                        </li>
-                        <hr />
-                        <li>
-                            <Link>
-                                <MdDashboard />
-                                Dashboard</Link>
-                        </li>
-                        <li><Link ><IoBagCheckSharp />
-                            Manage Orders</Link></li>
-                        <li><Link><IoIosAddCircle />
-                            Add Product</Link></li>
-                        <li><Link><LuLayoutDashboard />
-                            Manage Item</Link></li>
-                        <li><Link to="/Dashboard"><FaUserEdit />
-                            All Users</Link></li>
-                    </ul>
-
-                </div>
-            </div>): ( <div className="h-screen " >
-                <Link to="/" className=""> </Link>
-            </div>) }
-
-            
         </div>
     )
 }
