@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../../components/Card'
+import useAxiosPublic from '../../hook/useAxiosPublic';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -9,15 +10,17 @@ const ProductList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(8);
     const [categories, setCategories] = useState([]);
+    const axiosPublic = useAxiosPublic()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("http://localhost:4000/products")
-                const data = await response.json();
-                setProducts(data);
-                setFilteredItems(data);
-                setCategories(["all", ...new Set(data.map((item) => item.category))])
+                //const response = await fetch("http://localhost:4000/products")
+                const response = await axiosPublic.get("/products")
+                //const data = await response.data();
+                setProducts(response.data);
+                setFilteredItems(response.data);
+                setCategories(["all", ...new Set(response.data.map((item) => item.category))])
             } catch (error) {
                 console.log("Error fetching data : ", error);
             }

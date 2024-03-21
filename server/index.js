@@ -3,8 +3,10 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const productRouter = require("./routes/product.router");
 const cartRouter = require("./routes/cart.router")
+const UserRouter = require("./routes/user.router")
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const jwt = require("jsonwebtoken")
 
 // Define Swagger options and spec
 const swaggerDefinition = {
@@ -74,6 +76,15 @@ app.get("/", (req, res) => {
 
 app.use("/products", productRouter);
 app.use("/carts", cartRouter);
+app.use("/users", UserRouter);
+
+app.post("/jwt", (req,res)=> {
+    const user = req.body;
+    const token = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{
+        expiresIn :"1h"
+    })
+    res.send({ token })
+})
 
 // Serve Swagger UI at /api-doc
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
