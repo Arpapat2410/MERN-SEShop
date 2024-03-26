@@ -112,45 +112,39 @@ router.get('/:id', async(req, res) => {
 });
 
 
-
-
+//createProducts
 /**
  * @swagger
- * /carts:
+ * /products:
  *  post:
- *      summary: Add a new item to the cart or update existing item.
- *      tags: [Carts]
+ *      summary: Create a new product.
+ *      tags: [Products]
  *      requestBody:
  *          required: true
  *          content:
  *              application/json:
  *                  schema:
- *                      $ref: '#/components/schemas/Cart'
+ *                      $ref: '#/components/schemas/Product'
  *      responses:
  *          201:
- *              description: Item successfully added to the cart or updated.
+ *              description: The Product is successfully create.
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Product'
  *          500:
- *              description: Internal Server Error.
+ *              description: Some error happened
  */
-router.post("/", async (req, res) => {
-    try {
-        const { productId, email } = req.body;
-        let existingCart = await CartModel.findOne({ productId, email });
 
-        if (existingCart) {
-            // อัพเดทรายการในตะกร้าสินค้าหากมีรายการอยู่แล้ว
-            existingCart.quantity += req.body.quantity;
-            await existingCart.save();
-            res.status(201).json(existingCart);
-        } else {
-            // เพิ่มรายการใหม่ลงในตะกร้าสินค้าหากไม่มีรายการอยู่
-            const newCart = await CartModel.create(req.body);
-            res.status(201).json(newCart);
-        }
+router.post("/", async (req, res) => {
+    const newProduct = new ProductModel(req.body);
+    try {
+      const product = await newProduct.save();
+      res.status(201).json(product);
     } catch (error) {
-        res.status(500).json({ error: "Failed to Add Item to Cart" });
+      res.status(500).json({ message: error.message });
     }
-});
+  });
 
 
 /**

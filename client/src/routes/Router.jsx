@@ -12,6 +12,8 @@ import DashboardLayout from '../layout/DashboardLayout';
 import User from '../pages/dashboard/admin/User';
 import Dashboard from '../pages/dashboard/admin/Dashboard';
 import AdminRouter from '../PrivateRouter/AdminRouter';
+import ManageItem from '../pages/dashboard/admin/ManageItem';
+import Productadmin from '../pages/dashboard/admin/Productadmin';
 
 const router = createBrowserRouter([
   {
@@ -49,6 +51,8 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     children: [
       { path: "users", element: <User /> },
+      { path: "manageitem", element: <ManageItem /> },
+      { path: "productadmin", element: <Productadmin /> },
       {
         path: "",
         element: (

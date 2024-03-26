@@ -13,16 +13,16 @@ import useAdmin from "../hook/useAdmin";
 const DashboardLayout = () => {
     //const [isAdmin, isAdminLoading] = useAdmin();
     const isAdmin = true;
-    
+
     return (
 
         <div>
             {isAdmin ? (
                 <div className="drawer lg:drawer-open">
                     <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                    <div className="drawer-content flex flex-col items-center py-5">
+                    <div className="drawer-content py-5 px-10">
                         {/* Page content here */}
-                        <div className='flex items-center justify-between mx-4'>
+                        <div className='flex items-center justify-center mx-4'>
                             <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
                                 <BiSolidDashboard />
                             </label>
@@ -58,14 +58,14 @@ const DashboardLayout = () => {
 
                             </li>
                             <li>
-                                <Link>
+                                <Link to="/dashboard/productadmin" >
                                     <IoIosAddCircle />
                                     Add Product
                                 </Link>
 
                             </li>
                             <li>
-                                <Link>
+                                <Link to="/dashboard/manageitem" >
                                     <BiSolidDashboard />
                                     Manage Item
                                 </Link>

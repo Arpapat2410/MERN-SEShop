@@ -5,38 +5,23 @@
  *      User:
  *          type: object
  *          required:
- *              - productId
- *              - email
  *              - name
- *              - price
- *              - image
- *              - quantity
+ *              - email
+ *              - photoURL
  *          properties:
- *              productId:
- *                  type: string
- *                  description: The productId of the Cart item
- *              email:
- *                  type: string
- *                  description: The email of the Cart item
  *              name:
  *                  type: string
- *                  description: The name of the Cart item
- *              price:
+ *                  description: The name of the User
+ *              email:
  *                  type: string
- *                  description: The price of the Cart item
- *              image:
+ *                  description: The email of the User
+ *              photoURL:
  *                  type: string
- *                  description: The image of the Cart item
- *              quantity:
- *                  type: string
- *                  description: The quantity of the Cart item
+ *                  description: The photoURL of the User
  *          example:
- *              productId: "60c5xxxxx"
- *              email: "Aon24_za@gmail.com"
- *              name: "Macbook Pro"
- *              price: "2000"
- *              image: "http://example.com/macbook.jpg"
- *              quantity: 5
+ *              name: "Arpapat"
+ *              email: "Arpapat3@gmail.com"
+ *              photoURL: "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
  * tags:
  *  name: Users
  *  description: The products managing API
@@ -65,15 +50,7 @@ const verifyAdmin = require("../middlewares/verifyAdmin");
  *               items:
  *                 $ref: '#/components/schemas/User'
  *       500:
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
+ *         description: Some error occurred.
  */
 
 router.get("/", async (req, res) => {
@@ -108,24 +85,8 @@ router.get("/", async (req, res) => {
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  *       500:
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
+ *         description: Some error occurred.
  */
 
 router.get("/:id", async (req, res) => {
@@ -234,24 +195,8 @@ router.post("/", async (req, res) => {
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  *       500:
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  */
 
 
@@ -294,24 +239,8 @@ router.put("/:id", async (req, res) => {
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  *       500:
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  */
 
 router.delete("/:id", async (req, res) => {
@@ -355,14 +284,6 @@ router.delete("/:id", async (req, res) => {
  *                   description: Indicates whether the user is an admin
  *       500:
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  */
 
 
@@ -404,24 +325,8 @@ router.get("/admin/:email", verifyToken, async (req, res) => {
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  *       500:
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  */
 
 
@@ -472,24 +377,8 @@ router.patch("/user/:id",  async (req, res) => {
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  *       500:
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  */
 
 

@@ -82,20 +82,21 @@ const User = () => {
 
   return (
     <div className=''>
-      <div className="py-8 flex flex-col item center justify-center">
-        <div className="text-center px-4 space-y-7">
+       <div className="py-6 flex flex-col item center justify-center">
+       <div className=" px-2 space-y-7">
           <h2 className="md:text-5xl text-4xl font-bold md:leading-snug leading-snug">
             All  <span className="text-red">Users</span>
           </h2>
         </div>
       </div>
-      <div className='flex justify-between m-4'>
+      <div className='flex justify-between m-3'>
         <h2 className='text-2xl'>All Users:</h2>
         <h2 className='text-2xl'>Total Users: {users.length} </h2>
       </div>
+      
       <div>
         <div className="overflow-x-auto">
-          <table className="table table-zebra md:w-[870px] text-center">
+          <table className="table table-zebra text-center">
             {/* head */}
             <thead className='bg-red text-center text-white'>
               <tr>
