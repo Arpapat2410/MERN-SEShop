@@ -8,16 +8,19 @@ import { FaUserCheck } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { FaLocationArrow } from "react-icons/fa";
 import { BsFillQuestionCircleFill } from "react-icons/bs";
+import useAdmin from "../hook/useAdmin";
 
 const DashboardLayout = () => {
+    //const [isAdmin, isAdminLoading] = useAdmin();
     const isAdmin = true;
+    
     return (
 
         <div>
             {isAdmin ? (
                 <div className="drawer lg:drawer-open">
                     <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                    <div className="drawer-content flex flex-col items-center justify-center">
+                    <div className="drawer-content flex flex-col items-center py-5">
                         {/* Page content here */}
                         <div className='flex items-center justify-between mx-4'>
                             <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
@@ -68,7 +71,7 @@ const DashboardLayout = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link >
+                                <Link to="/dashboard/users" >
                                     <FaUserCheck />
                                     All Users
                                 </Link>
@@ -101,12 +104,18 @@ const DashboardLayout = () => {
                         </ul>
                     </div>
                 </div>
-            ) : (<div className='h-screen flex items-center justify-center'>
-                <Link to="/" className='btn btn-error'>You are not an admin! Back to </Link>
-            </div>)}
-
+            ) : (
+                <div className="h-screen flex items-center justify-center">
+                    <Link
+                        to="/"
+                        className="btn btn-sx btn-error sm:btn-sm md:btn-md lg:btn-lg"
+                    >
+                        You are not admin ! Back to Home
+                    </Link>
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default DashboardLayout

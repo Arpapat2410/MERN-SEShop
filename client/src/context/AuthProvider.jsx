@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react'
 export const AuthContext = createContext();
 import app from '../firebase/firebase.config';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged , signOut , updateProfile ,} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, updateProfile, } from "firebase/auth";
 import useAxiosPublic from '../hook/useAxiosPublic';
 
 
@@ -15,12 +15,12 @@ const AuthProvider = ({ children }) => {
     return createUserWithEmailAndPassword(auth, email, password);
   }
 
-  const updateUserProfile = ({name, photoURL}) => {
+  const updateUserProfile = ({ name, photoURL }) => {
     return updateProfile(auth.currentUser, {
-        displayName: name,
-        photoURL: photoURL
+      displayName: name,
+      photoURL: photoURL
     });
-}
+  }
 
   const login = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
@@ -49,22 +49,22 @@ const AuthProvider = ({ children }) => {
   //check if use is logged in
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser)
+      setUser(currentUser);
       if (currentUser) {
-        const userInfo = {email:currentUser.email}
+        const userInfo = { email: currentUser.email };
         axiosPublic.post("/jwt", userInfo).then((response) => {
-          if(response.data.token) {
-            localStorage.setItem("access_token", response.data.token)
+          if (response.data.token) {
+            localStorage.setItem("access_token", response.data.token);
           }
         })
       } else {
-        localStorage.removeItem("access_token")
+        localStorage.removeItem("access_token");
       }
-    })
+    });
     return () => {
       return unsubscribe();
-    }
-  }, [axiosPublic])
+    };
+  }, [axiosPublic]);
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

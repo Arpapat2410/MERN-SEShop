@@ -28,22 +28,21 @@ const SignUp = () => {
             .then((result) => {
                 const user = result.user;
                 console.log(user);
-                updateUserProfile(data.name , data.photoURL).then(()=>{
+                updateUserProfile(data.name, data.photoURL).then(() => {
                     const userInfo = {
-                        name : data.name,
+                        name: data.name,
                         email: data.email,
                     }
                     axiosPublic.post("/users", userInfo).then((response) => {
                         console.log(response);
-                        console.log(users);
                         Swal.fire({
-                            title : "Account created Successfuly",
-                            icon : "success",
-                            itmer: 1500,
-                        })
+                            title: "Account created Successfully",
+                            icon: "success",
+                            timer: 1500,
+                        });
                     })
                 })
-                alert("Account create Successful")
+                //alert("Account create Successful")
                 navigate(from, { replace: true })
             }).catch((error) => {
                 console.log(error);
@@ -51,28 +50,27 @@ const SignUp = () => {
     }
     const googleSignUp = () => {
         signUpWithPopup()
-        .then((result) => {
-            const user = result.user;
-            console.log(user);
+            .then((result) => {
+                const user = result.user;
+                console.log(user);
                 const userInfo = {
-                    name : result.user?.displayName,
+                    name: result.user?.displayName,
                     email: result.user?.email,
                     photoURL: result.user?.photoURL,
                 }
                 axiosPublic.post("/users", userInfo).then((response) => {
-                    console.log(response);
-                    console.log(users);
+                    //console.log(response);
+                    //console.log(users);
                     Swal.fire({
-                        title : "Account created Successfuly",
-                        icon : "success",
-                        itmer: 1500,
-                    })
+                        title: "Google sing Up Successfully",
+                        icon: "success",
+                        timer: 1500,
+                      });
+                    navigate(from, { replace: true })
                 })
-            alert("Account create Successful")
-            navigate(from, { replace: true })
-        }).catch((error) => {
-            console.log(error);
-        })
+            }).catch((error) => {
+                console.log(error);
+            })
     }
 
     return (

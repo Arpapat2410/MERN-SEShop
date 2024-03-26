@@ -9,7 +9,7 @@ import useAuth from "../hook/useAuth"
 import useAxiosPublic from '../hook/useAxiosPublic';
 import Swal from 'sweetalert2';
 
-const SignIn = () => {
+const SignIn = (name) => {
     const { login, signUpWithPopup } = useAuth()
     const axiosPublic = useAxiosPublic()
     const location = useLocation();
@@ -29,7 +29,6 @@ const SignIn = () => {
                 //console.log(user);
                 alert("Login Successful")
                 navigate(from, { replace: true })
-
             })
             .catch((error) => {
                 console.log(error);
@@ -37,11 +36,11 @@ const SignIn = () => {
     }
     const googleSignUp = () => {
         signUpWithPopup()
-        .then((result) => {
-            const user = result.user;
-            console.log(user);
+            .then((result) => {
+                const user = result.user;
+                console.log(user);
                 const userInfo = {
-                    name : result.user?.displayName,
+                    name: result.user?.displayName,
                     email: result.user?.email,
                     photoURL: result.user?.photoURL,
                 }
@@ -49,20 +48,19 @@ const SignIn = () => {
                     console.log(response);
                     console.log(users);
                     Swal.fire({
-                        title : "Account created Successfuly",
-                        icon : "success",
-                        itmer: 1500,
-                    })
+                        title: "Google sing Up Successfully",
+                        icon: "success",
+                        timer: 1500,
+                    });
+                    navigate(from, { replace: true })
                 })
-            alert("Account create Successful")
-            navigate(from, { replace: true })
-        }).catch((error) => {
-            Swal.fire({
-                title : "Email ro Password inccorrect, Please  try again",
-                icon : "warning",
-                itmer: 1500,
+            }).catch((error) => {
+                Swal.fire({
+                    title: "Email ro Password inccorrect, Please  try again",
+                    icon: "warning",
+                    itmer: 1500,
+                })
             })
-        })
     }
 
     return (
@@ -74,23 +72,15 @@ const SignIn = () => {
                     <label className="label">
                         <span className="label-text ">Email</span>
                     </label>
-                    <input
-                        type="email"
-                        placeholder="email"
-                        className="input input-bordered"
-                        required
-                        {...register("email")} />
+                    <input type="email" placeholder="email" className="input input-bordered" required {...register("email")} />
+
                 </div>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Password</span>
                     </label>
-                    <input
-                        type="password"
-                        placeholder="password"
-                        className="input input-bordered"
-                        required
-                        {...register("password")} />
+                    <input type="password" placeholder="password" className="input input-bordered" required {...register("password")} />
+
                     <label className="label">
                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                     </label>

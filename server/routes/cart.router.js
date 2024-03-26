@@ -38,7 +38,7 @@
  *              image: "http://example.com/macbook.jpg"
  *              quantity: 5
  * tags:
- *  name: Carts Item
+ *  name: Carts
  *  description: The products managing API
  */
 

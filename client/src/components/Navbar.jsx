@@ -83,7 +83,7 @@ const Navbar = () => {
                             </button>
                         }
                     </div>
-                    <Modal name="login" />
+                    <Modal nameModal="login" />
                 </div>
             </div>
         </header>

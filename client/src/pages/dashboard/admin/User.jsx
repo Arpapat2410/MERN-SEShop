@@ -1,63 +1,60 @@
 import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '../../../hook/useAxiosSecure'
-import useAuth from '../../../hook/useAuth'
 import Swal from "sweetalert2"
-import useAxiosPublic from '../../../hook/useAxiosPublic'
-import useAdmin from '../../../hook/useAdmin';
 import { AiOutlineDelete } from "react-icons/ai";
 
 
-
 const User = () => {
-  const [isAdmin, isAdminLoading] = useAdmin();
-  const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get(`/users`);
       return res.data;
-    }
-  })
+    },
+  });
+
 
   const handleMakeAdmin = async (user) => {
     if (user.role === "admin") {
-      axiosPublic.patch(`/users/user/${user._id}`).then((res) => {
-        refetch()
+      axiosSecure.patch(`/users/user/${user._id}`).then((res) => {
+        refetch();
         Swal.fire({
-          title: `${user.name} is a user now!`,
+          title: `${user.name} is a user now`,
           icon: "success",
-          itmer: 1500,
+          timer: 1500,
         })
       }).catch((error) => {
-        const errorStatus = error?.response?.status
-        const errorMessage = error?.response?.data?.message
-        Swal.fire({
-          title: `${errorStatus} `,
-          icon: "error",
-          itmer: 1500,
-        })
-      })
-    } else {
-      axiosPublic.patch(`/users/admin/${user._id}`).then((res) => {
-        refetch()
-        Swal.fire({
-          title: `${user.name} is a user now!`,
-          icon: "success",
-          itmer: 1500,
-        })
-      }).catch((error) => {
-        const errorStatus = error?.response?.status
-        const errorMessage = error?.response?.data?.message
+        const errorStatus = error?.response?.status;
+        const errorMessage = error?.response?.data?.message;
         Swal.fire({
           title: `${errorStatus} - ${errorMessage}`,
           icon: "error",
-          itmer: 1500,
+          timer: 1500,
+        })
+      })
+    }
+    else {
+      axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
+        refetch();
+        Swal.fire({
+          title: "Update Role Successfully",
+          icon: "success",
+          timer: 1500,
+        })
+      }).catch((error) => {
+        const errorStatus = error?.response?.status;
+        const errorMessage = error?.response?.data?.message;
+        Swal.fire({
+          title: `${errorStatus} - ${errorMessage}`,
+          icon: "error",
+          timer: 1500,
         })
       })
     }
   }
+
 
   const handleDeleteUser = (user) => {
     Swal.fire({
@@ -70,7 +67,7 @@ const User = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/users/${user._id}`).then((res)=>{
+        axiosSecure.delete(`/users/${user._id}`).then((res) => {
           refetch()
           Swal.fire({
             title: "Deleted!",
@@ -81,10 +78,17 @@ const User = () => {
       }
     })
   }
-  
+
 
   return (
-    <div>
+    <div className=''>
+      <div className="py-8 flex flex-col item center justify-center">
+        <div className="text-center px-4 space-y-7">
+          <h2 className="md:text-5xl text-4xl font-bold md:leading-snug leading-snug">
+            All  <span className="text-red">Users</span>
+          </h2>
+        </div>
+      </div>
       <div className='flex justify-between m-4'>
         <h2 className='text-2xl'>All Users:</h2>
         <h2 className='text-2xl'>Total Users: {users.length} </h2>
@@ -130,19 +134,14 @@ const User = () => {
                     {user.email}
                   </td>
                   <td>
-                    <div className='flex'>
+                    <div className='flex items-center justify-center'>
                       <p>
                         User
                       </p>
-                      <input
-                        type="checkbox"
-                        className="toggle toggle-success mx-2"
-                        checked={user.role === "admin"}
-                        onClick={() => handleMakeAdmin(user)}  // Pass the user object to handleMakeAdmin
+                      <input type="checkbox" className="toggle toggle-success mx-2" onClick={() => handleMakeAdmin(user)} checked={user.role === "admin"}
                       />
-
                       <p>
-                        {user.role}
+                        Admin
                       </p>
                     </div>
                   </td>

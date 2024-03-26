@@ -3,7 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const productRouter = require("./routes/product.router");
 const cartRouter = require("./routes/cart.router")
-const UserRouter = require("./routes/user.router")
+const userRouter = require("./routes/user.router")
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const jwt = require("jsonwebtoken")
@@ -16,12 +16,13 @@ const swaggerDefinition = {
         version: '1.0.0',
         description: 'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
         license: {
-            name: 'Licensed Under MIT',
-            url: 'https://spdx.org/licenses/MIT.html',
+            name: 'GitHub',
+            url: 'https://github.com/Arpapat2410',
         },
         contact: {
             name: 'Arpapat Yipram',
-            url: 'https://github.com/Arpapat2410',
+            url: "https://github.com/Arpapat2410",
+            email: "644259044@webmail.npru.ac.th",
         },
     },
     externalDocs: {
@@ -74,17 +75,20 @@ app.get("/", (req, res) => {
     res.send("<h1>This is a RESTful API for E-commerce website with MERN Stack</h1>");
 });
 
+//Add Router
 app.use("/products", productRouter);
 app.use("/carts", cartRouter);
-app.use("/users", UserRouter);
+app.use("/users", userRouter);
 
-app.post("/jwt", (req,res)=> {
-    const user = req.body;
-    const token = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{
-        expiresIn :"1h"
-    })
-    res.send({ token })
-})
+app.post("/jwt", async (req, res) => {
+  //create and return JWT
+  //email,name
+  const user = req.body;
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1h",
+  });
+  res.send({ token });
+});
 
 // Serve Swagger UI at /api-doc
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
