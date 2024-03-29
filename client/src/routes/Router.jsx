@@ -13,7 +13,8 @@ import User from '../pages/dashboard/admin/User';
 import Dashboard from '../pages/dashboard/admin/Dashboard';
 import AdminRouter from '../PrivateRouter/AdminRouter';
 import ManageItem from '../pages/dashboard/admin/ManageItem';
-import Productadmin from '../pages/dashboard/admin/Productadmin';
+import AddProductadmin from '../pages/dashboard/admin/AddProductadmin';
+import UpdateProduct from '../pages/dashboard/admin/UpdateProduct';
 
 const router = createBrowserRouter([
   {
@@ -52,7 +53,8 @@ const router = createBrowserRouter([
     children: [
       { path: "users", element: <User /> },
       { path: "manageitem", element: <ManageItem /> },
-      { path: "productadmin", element: <Productadmin /> },
+      { path: "addproductadmin", element: <AddProductadmin /> },
+      { path: "updateproduct", element: <UpdateProduct /> },
       {
         path: "",
         element: (

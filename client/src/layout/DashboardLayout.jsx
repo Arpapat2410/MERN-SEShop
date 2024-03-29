@@ -58,7 +58,7 @@ const DashboardLayout = () => {
 
                             </li>
                             <li>
-                                <Link to="/dashboard/productadmin" >
+                                <Link to="/dashboard/addproductadmin" >
                                     <IoIosAddCircle />
                                     Add Product
                                 </Link>
