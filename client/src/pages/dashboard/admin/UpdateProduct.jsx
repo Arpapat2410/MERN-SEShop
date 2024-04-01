@@ -1,81 +1,163 @@
-import React, { useState, useEffect } from 'react';
-import useAxiosSecure from '../../../hook/useAxiosSecure';
-import Swal from 'sweetalert2';
+import React, { useState, useEffect } from "react";
+import useAxiosSecure from "../../../hook/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { FaSave } from "react-icons/fa";
 
 const UpdateProduct = () => {
-  const [product, setProduct] = useState({
-    name: '',
-    category: '',
-    price: '',
-    description: '',
-    image: '',
-  });
-  const axios = useAxiosSecure();
+  const { id } = useParams();
 
+  const axios = useAxiosSecure();
+  const [product, setProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchProduct = async () => {
-      try {
-        const response = await axios.get(`/products/${productId}`); // ต้องรับค่า productId มาจาก props หรือ params
-        setProduct(response.data);
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      }
+      const response = await axios.get(`/products/${id}`);
+      setProduct(response.data);
+      setIsLoading(false);
     };
     fetchProduct();
-  }, [axios, productId]); // ต้องรับค่า productId มาจาก props หรือ params
+  }, [axios, id]);
 
-  const handleUpdateProduct = async () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  console.log(product);
+
+  const handleUpdateProduct = async (data) => {
+
     try {
-      // Send PUT request to update product
-      await axios.put(`/products/${productId}`, product); // ต้องรับค่า productId มาจาก props หรือ params
+      const newProduct = {
+        name: data.productName ? data.productName : product.name,
+        category: data.category ? data.category : product.category,
+        price: data.price ? data.price : product.price,
+        description: data.details ? data.details : product.description,
+        image: data.imageUrl ? data.imageUrl : product.image,
+      };
+      console.log(newProduct);
+      await axios.put(`/products/${id}`, newProduct);
 
-      // Show success message
       Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Product updated successfully!',
+        icon: "success",
+        title: "Success!",
+        text: "Product updated successfully!",
       });
     } catch (error) {
-      // Show error message
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Failed to update product!',
+        icon: "error",
+        title: "Oops...",
+        text: "Failed to update product!",
       });
-      console.error('Error updating product:', error);
+      console.error("Error updating product:", error);
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
-  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div>
-      <h2>Update Product</h2>
-      <form onSubmit={handleUpdateProduct}>
-        <label>
-          Product Name:
-          <input type="text" name="name" value={product.name} onChange={handleChange} />
-        </label>
-        <label>
-          Category:
-          <input type="text" name="category" value={product.category} onChange={handleChange} />
-        </label>
-        <label>
-          Price:
-          <input type="text" name="price" value={product.price} onChange={handleChange} />
-        </label>
-        <label>
-          Description:
-          <textarea name="description" value={product.description} onChange={handleChange} />
-        </label>
-        <label>
-          Image URL:
-          <input type="text" name="image" value={product.image} onChange={handleChange} />
-        </label>
-        <button type="submit">Update Product</button>
+    <div className="max-w-screen-2xl container mx-auto">
+      <form
+        className="bg-gradient-to-r from-0%  to-[#FCFCFC] to-100%"
+        onSubmit={handleSubmit(handleUpdateProduct)}>
+        <div className="py-4 flex flex-col item center justify-center">
+          <div className=" px-2 space-y-7">
+            <h2 className="md:text-5xl text-4xl font-bold md:leading-snug leading-snug">
+              Update <span className="text-red">Menu Item</span>
+            </h2>
+          </div>
+
+          <label className="form-control w-full py-5">
+            <div className="label">
+              <span className="label-text">
+                Product Name<span> *</span>
+              </span>
+            </div>
+            <input
+              {...register("productName")}
+              type="text"
+              defaultValue={product.name}
+              className="input input-bordered w-full rounded-md mt-2"
+            />
+          </label>
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="md:w-1/2">
+              <label className="form-control w-full">
+                <div className="label">
+                  <span className="label-text">
+                    Category<span> *</span>
+                  </span>
+                </div>
+                <select
+                  {...register("category")}
+                  defaultValue={product.category}
+                  className="select select-bordered rounded-md mt-2">
+                  <option disabled selected>
+                    Select a category
+                  </option>
+                  <option>Clothing</option>
+                  <option>Accessories</option>
+                  <option>Gadgets</option>
+                  <option>Swag</option>
+                </select>
+              </label>
+            </div>
+
+            <div className="md:w-1/2">
+              <label className="form-control w-full">
+                <div className="label">
+                  <span className="label-text">
+                    Price<span> *</span>
+                  </span>
+                </div>
+                <input
+                  {...register("price")}
+                  type="text"
+                  defaultValue={product.price}
+                  className="input input-bordered w-full rounded-md mt-2"
+                />
+              </label>
+            </div>
+          </div>
+
+          <label className="form-control w-full py-5">
+            <div className="label">
+              <span className="label-text">Product Details</span>
+            </div>
+            <textarea
+              {...register("details")}
+              className="textarea textarea-bordered h-24 rounded-md mt-2"
+              defaultValue={product.description}></textarea>
+          </label>
+
+          <label className="form-control w-full py-">
+            <div className="label">
+              <span className="label-text">
+                Image URL<span> *</span>
+              </span>
+            </div>
+            <input
+              {...register("imageUrl")}
+              type="text"
+              defaultValue={product.image}
+              className="input input-bordered w-full rounded-md mt-2"
+            />
+          </label>
+
+          <div className="card-actions py-10">
+            <button
+              type="submit"
+              className="btn bg-red text-white rounded-lg w-36">
+              Update Item <FaSave />
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   );

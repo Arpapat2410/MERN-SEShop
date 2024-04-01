@@ -4,6 +4,8 @@ import { MdOutlineDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { GrLinkNext } from "react-icons/gr";
+import { Link } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa6";
 
 
 const ManageItem = () => {
@@ -96,16 +98,15 @@ const ManageItem = () => {
                                 <td className="text-center">{product.name}</td>
                                 <td className="text-center">{product.price}</td>
                                 <td>
-                                    <button
-                                        className="btn cursor-pointer bg-orange-400 text-white justify-center items-center rounded-1 py-1 px-4 duration-100 hover:bg-white hover:text-orange-400"
-                                        onClick={() => handleUpdateProduct(product._id)}
-                                    >
+                                    <Link
+                                        to={`/dashboard/updateproduct/${product._id}`}
+                                        className="btn cursor-pointer bg-orange-400 text-white justify-center items-center rounded-1 py-1 px-4 duration-100 hover:bg-white hover:text-orange-400">
                                         <FaEdit />
-                                    </button>
+                                    </Link>
                                 </td>
                                 <td>
                                     <button
-                                        className='btn cursor-pointer bg-base-300 text-red rounded-1 py-1 px-4 duration-100 hover:bg-red hover:text-white'
+                                        className='btn cursor-pointer bg-red text-white rounded-1 py-1 px-4 duration-100 hover:bg-white hover:text-red'
                                         onClick={() => handleDeleteProduct(product._id)}
                                     >
                                         <MdOutlineDelete />
@@ -122,7 +123,7 @@ const ManageItem = () => {
                         onClick={() => paginate(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
-                        Previous
+                        <FaArrowLeft /> Previous
                     </button>
                     <button
                         className="btn bg-red text-white rounded-lg"

@@ -54,7 +54,7 @@ const router = createBrowserRouter([
       { path: "users", element: <User /> },
       { path: "manageitem", element: <ManageItem /> },
       { path: "addproductadmin", element: <AddProductadmin /> },
-      { path: "updateproduct", element: <UpdateProduct /> },
+      { path: "updateproduct/:id", element: <UpdateProduct /> },
       {
         path: "",
         element: (
