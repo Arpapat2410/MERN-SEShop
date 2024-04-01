@@ -331,9 +331,10 @@ router.get("/admin/:email", verifyToken, async (req, res) => {
 
 
 //Change Admin to User Role
-router.patch("/user/:id", verifyAdmin , verifyToken, async (req, res) => {
+router.patch("/user/:id",   verifyToken, verifyAdmin , async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
     const updatedUser = await UserModel.findByIdAndUpdate(
       id,
       {
@@ -383,11 +384,11 @@ router.patch("/user/:id", verifyAdmin , verifyToken, async (req, res) => {
 
 
 //Change User to Admin Role
-router.patch("/admin/:id", verifyAdmin , verifyToken,  async (req, res) => {
+router.patch("/admin/:id",  verifyToken,  verifyAdmin , async (req, res) => {
   try {
     const { id } = req.params;
     const updatedUser = await UserModel.findByIdAndUpdate(
-      id,
+     id,
       {
         role: "admin",
       },
