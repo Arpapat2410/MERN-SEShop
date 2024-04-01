@@ -11,8 +11,8 @@ import { BsFillQuestionCircleFill } from "react-icons/bs";
 import useAdmin from "../hook/useAdmin";
 
 const DashboardLayout = () => {
-    //const [isAdmin, isAdminLoading] = useAdmin();
-    const isAdmin = true;
+    const [isAdmin, isAdminLoading] = useAdmin();
+    //const isAdmin = true;
 
     return (
 

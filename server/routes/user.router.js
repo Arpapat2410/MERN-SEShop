@@ -291,7 +291,7 @@ router.delete("/:id", async (req, res) => {
 router.get("/admin/:email", verifyToken, async (req, res) => {
   try {
     const { email } = req.params;
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email: {$regex:new RegExp(email,'i')} });
     let isAdmin = false;
     if (user.role === "admin") {
       isAdmin = true;
@@ -331,7 +331,7 @@ router.get("/admin/:email", verifyToken, async (req, res) => {
 
 
 //Change Admin to User Role
-router.patch("/user/:id",  async (req, res) => {
+router.patch("/user/:id", verifyAdmin , verifyToken, async (req, res) => {
   try {
     const { id } = req.params;
     const updatedUser = await UserModel.findByIdAndUpdate(
@@ -383,7 +383,7 @@ router.patch("/user/:id",  async (req, res) => {
 
 
 //Change User to Admin Role
-router.patch("/admin/:id", async (req, res) => {
+router.patch("/admin/:id", verifyAdmin , verifyToken,  async (req, res) => {
   try {
     const { id } = req.params;
     const updatedUser = await UserModel.findByIdAndUpdate(
