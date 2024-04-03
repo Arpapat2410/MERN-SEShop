@@ -7,7 +7,6 @@ import { GrLinkNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
 
-
 const ManageItem = () => {
     const axios = useAxiosSecure();
     const [products, setProducts] = useState([]);
@@ -61,7 +60,6 @@ const ManageItem = () => {
             Swal.fire('Error!', 'Failed to delete product.', 'error');
         }
     };
-
 
     return (
         <div className="max-w-screen-2xl container mx-auto">

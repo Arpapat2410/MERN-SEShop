@@ -4,7 +4,6 @@ import useAxiosSecure from '../../../hook/useAxiosSecure'
 import Swal from "sweetalert2"
 import { AiOutlineDelete } from "react-icons/ai";
 
-
 const User = () => {
   const axiosSecure = useAxiosSecure();
   const { refetch, data: users = [] } = useQuery({
@@ -55,7 +54,6 @@ const User = () => {
     }
   }
 
-
   const handleDeleteUser = (user) => {
     Swal.fire({
       title: "Are you sure?",
@@ -78,7 +76,6 @@ const User = () => {
       }
     })
   }
-
 
   return (
     <div className=''>
