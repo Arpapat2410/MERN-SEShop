@@ -125,24 +125,8 @@ router.get("/:id", async (req, res) => {
  *               $ref: '#/components/schemas/User'
  *       302:
  *         description: User already exists
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  *       500:
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message
  */
 
 router.post("/", async (req, res) => {
