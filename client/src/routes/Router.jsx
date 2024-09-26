@@ -1,7 +1,20 @@
 import React from 'react'
 import { createBrowserRouter, } from "react-router-dom";
 import Main from '../layout/Main';
-import Home from '../pages/home/home';
+import Home from '../pages/home/Home';
+import ProductList from '../pages/shop/ProductList';
+import SignUp from '../components/SignUp';
+import SignIn from '../components/SignIn';
+import UpdateProfile from '../pages/dashboard/UpdateProfile';
+import PrivateRouter from '../PrivateRouter/PrivateRouter';
+import AddtoCart from '../pages/shop/AddtoCart';
+import DashboardLayout from '../layout/DashboardLayout';
+import User from '../pages/dashboard/admin/User';
+import Dashboard from '../pages/dashboard/admin/Dashboard';
+import AdminRouter from '../PrivateRouter/AdminRouter';
+import ManageItem from '../pages/dashboard/admin/ManageItem';
+import AddProductadmin from '../pages/dashboard/admin/AddProductadmin';
+import UpdateProduct from '../pages/dashboard/admin/UpdateProduct';
 
 const router = createBrowserRouter([
   {
@@ -12,8 +25,47 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+      {
+        path: "/shop",
+        element: (<PrivateRouter><ProductList /></PrivateRouter>)
+      },
+      {
+        path: "/update-profile",
+        element: <UpdateProfile />
+      },
+      {
+        path: "/AddtoCart",
+        element: <AddtoCart />,
+      }
     ]
   },
+  {
+    path: "/SignUp",
+    element: <SignUp />,
+  },
+  {
+    path: "/SignIn",
+    element: <SignIn />,
+  },
+  {
+    path: "Dashboard",
+    element: <DashboardLayout />,
+    children: [
+      { path: "users", element: <User /> },
+      { path: "manageitem", element: <ManageItem /> },
+      { path: "addproductadmin", element: <AddProductadmin /> },
+      { path: "updateproduct/:id", element: <UpdateProduct /> },
+      {
+        path: "",
+        element: (
+          <PrivateRouter>
+            <Dashboard />
+          </PrivateRouter>
+        ),
+      },
+    ],
+  },
+
 ]);
 
 

@@ -1,0 +1,99 @@
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const productRouter = require("./routes/product.router");
+const cartRouter = require("./routes/cart.router")
+const userRouter = require("./routes/user.router")
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const jwt = require("jsonwebtoken")
+
+// Define Swagger options and spec
+const swaggerDefinition = {
+    openapi: '3.0.1',
+    info: {
+        title: 'RESTful API for SE Shop',
+        version: '1.0.0',
+        description: 'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
+        license: {
+            name: 'GitHub',
+            url: 'https://github.com/Arpapat2410',
+        },
+        contact: {
+            name: 'Arpapat Yipram',
+            url: "https://github.com/Arpapat2410",
+            email: "644259044@webmail.npru.ac.th",
+        },
+    },
+    externalDocs: {
+        description: "Download Swagger.josn",
+        url: "/swagger.json",
+    },
+    servers: [{
+        url: 'http://localhost:4000',
+        description: 'Development server',
+    }, ],
+};
+const options = {
+    swaggerDefinition,
+    // Paths to files containing OpenAPI definitions
+    apis: ['./routes/*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+// Connect to the database
+require("dotenv").config();
+const MONGODB_URI = process.env.MONGODB_URI;
+mongoose.set("strictQuery", false);
+mongoose.connect(MONGODB_URI).then(err => {
+    if (!err) {
+        return console.log(err);
+    }
+    return console.log("Connected to MongoDB");
+});
+
+// Set up Express app
+const app = express();
+const PORT = process.env.PORT || 4000;
+const CLIENT_URL = process.env.CLIENT_URL;
+
+// Middleware
+app.use(cors({
+    credentials: true,
+    origin: CLIENT_URL
+}));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.get('/swagger.json', (req,res)=>{
+    res.header("Content-Type","application/josn");
+    res.send(swaggerSpec);
+  })
+
+// Routes
+app.get("/", (req, res) => {
+    res.send("<h1>This is a RESTful API for E-commerce website with MERN Stack</h1>");
+});
+
+//Add Router
+app.use("/products", productRouter);
+app.use("/carts", cartRouter);
+app.use("/users", userRouter);
+
+app.post("/jwt", async (req, res) => {
+  //create and return JWT
+  //email,name
+  const user = req.body;
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1h",
+  });
+  res.send({ token });
+});
+
+// Serve Swagger UI at /api-doc
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Start server
+const server = app.listen(PORT, () => {
+    console.log("Server is running on http://localhost:" + PORT);
+});
